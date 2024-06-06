@@ -16,7 +16,9 @@ int main()
     {
         std::cout << "Player loaded:" << std::endl;
         playerSprite.setTexture(playerTexture);
-        playerSprite.setTextureRect(sf::IntRect(256,128,64,64));
+        int Xindex = 0;
+        int Yindex = 0;
+        playerSprite.setTextureRect(sf::IntRect(Xindex*64,Yindex*64,64,64));
         playerSprite.scale(sf::Vector2f(2, 2));
     }
     else
@@ -35,7 +37,19 @@ int main()
                 window.close();
             if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape))
                 window.close();
+            
         }
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            {
+                    sf::Vector2f position = playerSprite.getPosition();
+                    playerSprite.setPosition(position + sf::Vector2f(1, 0));
+                    int Xindex = 0;
+                    int Yindex = 3;
+                    playerSprite.setTextureRect(sf::IntRect(Xindex * 64, Yindex * 64, 64, 64));
+            }
+
+
 //------------------------ draw -------------------------------------------
         window.clear(sf::Color::Black);
         window.draw(playerSprite);
