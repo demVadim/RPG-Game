@@ -1,8 +1,18 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
 
 int main()
 {
+
+
+
+
+
+
+
+
+
     //-------------------------- INIT ------------------------
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
