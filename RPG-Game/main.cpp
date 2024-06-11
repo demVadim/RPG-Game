@@ -5,18 +5,12 @@
 int main()
 {
 
-
-
-
-
-
-
-
-
     //-------------------------- INIT ------------------------
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "RPG Game", sf::Style::Default, settings);
+
+    sf::RectangleShape bullet(sf::Vector2f(50, 25));
     
     //--------------------------- LOAD ------------------------
     //--------------------------- SKELETON ------------------------
@@ -52,6 +46,7 @@ int main()
         int Yindex = 0;
         playerSprite.setTextureRect(sf::IntRect(Xindex*64,Yindex*64,64,64));
         playerSprite.scale(sf::Vector2f(2, 2));
+        playerSprite.setPosition(sf::Vector2f(1650, 800));
     }
     else
     {
@@ -59,6 +54,12 @@ int main()
     }
     //--------------------------- PLAYER --------------------------
     //--------------------------- LOAD ------------------------
+
+    //------------- calculate bullet
+
+    bullet.setPosition(playerSprite.getPosition());
+
+    sf::Vector2f direction = skeletonSprite.getPosition() - bullet.getPosition();
 
     //-------------------------- main loop ------------------------
     while (window.isOpen())
@@ -73,21 +74,25 @@ int main()
                 window.close();
         }
 
+        bullet.setPosition(bullet.getPosition() + direction * 0.001f);
+        
+
         sf::Vector2f position = playerSprite.getPosition();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            playerSprite.setPosition(position + sf::Vector2f(1, 0));
+            playerSprite.setPosition(position + sf::Vector2f(2, 0));
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-                playerSprite.setPosition(position + sf::Vector2f(-1, 0));
+                playerSprite.setPosition(position + sf::Vector2f(-2, 0));
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-                    playerSprite.setPosition(position + sf::Vector2f(0, -1));
+                    playerSprite.setPosition(position + sf::Vector2f(0, -2));
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-                        playerSprite.setPosition(position + sf::Vector2f(0, 1));
+                        playerSprite.setPosition(position + sf::Vector2f(0, 2));
 
         //------------------------ draw -------------------------------------------
         window.clear(sf::Color::Black);
 
         window.draw(skeletonSprite);
         window.draw(playerSprite);
+        window.draw(bullet);
 
         window.display();
     }
