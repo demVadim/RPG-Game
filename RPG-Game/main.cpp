@@ -1,6 +1,17 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include <math.h>
+
+sf::Vector2f NormalizeVector(sf::Vector2f vector)
+{
+    float magnitude = std::sqrt(vector.x * vector.x + vector.y * vector.y);
+    sf::Vector2f normalizedVector;
+    normalizedVector.x = vector.x / magnitude;
+    normalizedVector.y = vector.y / magnitude;
+    
+    return normalizedVector;
+}
 
 int main()
 {
@@ -11,6 +22,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "RPG Game", sf::Style::Default, settings);
 
     sf::RectangleShape bullet(sf::Vector2f(50, 25));
+    float bulletSpeed = 5.0f;
     
     //--------------------------- LOAD ------------------------
     //--------------------------- SKELETON ------------------------
@@ -22,7 +34,7 @@ int main()
     {
         std::cout << "Skeleton loaded:" << std::endl;
         skeletonSprite.setTexture(skeletonTexture);
-        skeletonSprite.setPosition(sf::Vector2f(400, 100));
+        skeletonSprite.setPosition(sf::Vector2f(1600, 700));
         int Xindex = 0;
         int Yindex = 2;
         skeletonSprite.setTextureRect(sf::IntRect(Xindex * 64, Yindex * 64, 64, 64));
@@ -46,7 +58,7 @@ int main()
         int Yindex = 0;
         playerSprite.setTextureRect(sf::IntRect(Xindex*64,Yindex*64,64,64));
         playerSprite.scale(sf::Vector2f(2, 2));
-        playerSprite.setPosition(sf::Vector2f(1650, 800));
+        playerSprite.setPosition(sf::Vector2f(0, 0));
     }
     else
     {
@@ -55,11 +67,12 @@ int main()
     //--------------------------- PLAYER --------------------------
     //--------------------------- LOAD ------------------------
 
-    //------------- calculate bullet
-
     bullet.setPosition(playerSprite.getPosition());
 
-    sf::Vector2f direction = skeletonSprite.getPosition() - bullet.getPosition();
+    //------------- calculate bullet
+
+    sf::Vector2f bulletDirection = skeletonSprite.getPosition() - bullet.getPosition();
+    bulletDirection= NormalizeVector(bulletDirection);
 
     //-------------------------- main loop ------------------------
     while (window.isOpen())
@@ -74,7 +87,7 @@ int main()
                 window.close();
         }
 
-        bullet.setPosition(bullet.getPosition() + direction * 0.001f);
+        bullet.setPosition(bullet.getPosition() + bulletDirection * bulletSpeed);
         
 
         sf::Vector2f position = playerSprite.getPosition();
