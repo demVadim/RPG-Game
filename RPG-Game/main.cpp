@@ -21,9 +21,10 @@ int main()
     settings.antialiasingLevel = 8;
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "RPG Game", sf::Style::Default, settings);
 
-    sf::RectangleShape bullet(sf::Vector2f(50, 25));
+    std::vector<sf::RectangleShape>bullets;
     float bulletSpeed = 5.0f;
     
+
     //--------------------------- LOAD ------------------------
     //--------------------------- SKELETON ------------------------
   
@@ -67,12 +68,6 @@ int main()
     //--------------------------- PLAYER --------------------------
     //--------------------------- LOAD ------------------------
 
-    bullet.setPosition(playerSprite.getPosition());
-
-    //------------- calculate bullet
-
-    sf::Vector2f bulletDirection = skeletonSprite.getPosition() - bullet.getPosition();
-    bulletDirection= NormalizeVector(bulletDirection);
 
     //-------------------------- main loop ------------------------
     while (window.isOpen())
@@ -87,7 +82,7 @@ int main()
                 window.close();
         }
 
-        bullet.setPosition(bullet.getPosition() + bulletDirection * bulletSpeed);
+        
         
 
         sf::Vector2f position = playerSprite.getPosition();
@@ -99,13 +94,30 @@ int main()
                     playerSprite.setPosition(position + sf::Vector2f(0, -2));
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                         playerSprite.setPosition(position + sf::Vector2f(0, 2));
+                    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+                    {
+                        bullets.push_back(sf::RectangleShape(sf::Vector2f(50, 25)));
 
+                        int i = bullets.size() - 1;
+                        bullets[i].setPosition(playerSprite.getPosition());
+                    }
+
+                    for (size_t i = 0; i <bullets.size();i++)
+                    {
+                        sf::Vector2f bulletDirection = bulletDirection = skeletonSprite.getPosition() - bullets[i].getPosition();
+                        bulletDirection = NormalizeVector(bulletDirection);
+                        bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed);
+                    }
         //------------------------ draw -------------------------------------------
         window.clear(sf::Color::Black);
 
         window.draw(skeletonSprite);
         window.draw(playerSprite);
-        window.draw(bullet);
+        
+        for (size_t i = 0; i < bullets.size(); i++)
+        {
+            window.draw(bullets[i]);
+        }
 
         window.display();
     }
