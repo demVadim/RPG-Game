@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-class Player
+class Skeleton
 {
 private:
 	sf::Texture texture;
@@ -13,3 +13,4 @@ public:
 	void Update();
 	void Draw();
 };
+
