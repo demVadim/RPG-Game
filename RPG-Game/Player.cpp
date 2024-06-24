@@ -37,7 +37,7 @@ void Player::Update()
         sprite.setPosition(position + sf::Vector2f(0, 2));
 }
 
-void Player::Draw()
+void Player::Draw(sf::RenderWindow window)
 {
-
+    window.draw(sprite);
 }

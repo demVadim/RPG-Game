@@ -73,7 +73,7 @@ int main()
         skeleton.Draw();
         player.Draw();
         window.draw(skeleton.sprite);
-        window.draw(player.sprite);
+      
         
         for (size_t i = 0; i < bullets.size(); i++)
         {
