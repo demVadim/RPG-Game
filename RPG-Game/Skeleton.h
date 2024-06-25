@@ -5,12 +5,14 @@ class Skeleton
 {
 private:
 	sf::Texture texture;
+
+
 public:
 	sf::Sprite sprite;
 public:
 	void Initialize();
 	void Load();
 	void Update();
-	void Draw();
+	void Draw(sf::RenderWindow& window);
 };
 

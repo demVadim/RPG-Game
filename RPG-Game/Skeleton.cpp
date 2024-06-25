@@ -27,6 +27,7 @@ void Skeleton::Update()
 {
 }
 
-void Skeleton::Draw()
+void Skeleton::Draw(sf::RenderWindow& window)
 {
+    window.draw(sprite);
 }
