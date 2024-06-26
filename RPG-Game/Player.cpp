@@ -4,7 +4,12 @@
 
 void Player::Initialize()
 {
-
+    boundingRectangle.setFillColor(sf::Color::Transparent);
+    boundingRectangle.setOutlineColor(sf::Color::Red);
+    boundingRectangle.setOutlineThickness(1);
+    
+    size = sf::Vector2i(64, 64);
+    
 }
 
 void Player::Load()
@@ -15,9 +20,10 @@ void Player::Load()
         sprite.setTexture(texture);
         int Xindex = 0;
         int Yindex = 0;
-        sprite.setTextureRect(sf::IntRect(Xindex * 64, Yindex * 64, 64, 64));
-        sprite.scale(sf::Vector2f(2, 2));
+        sprite.setTextureRect(sf::IntRect(Xindex * size.x, Yindex * size.y, size.y, size.y));
         sprite.setPosition(sf::Vector2f(0, 0));
+        sprite.scale(sf::Vector2f(3, 3));
+        boundingRectangle.setSize(sf::Vector2f(size.x * sprite.getScale().x, size.y * sprite.getScale().y));
     }
     else
     {
@@ -50,11 +56,15 @@ void Player::Update(Skeleton& skeleton)
         bulletDirection = Math::NormalizeVector(bulletDirection);
         bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed);
     }
+
+    boundingRectangle.setPosition(sprite.getPosition());
 }
 
 void Player::Draw(sf::RenderWindow& window)
 {
     window.draw(sprite);
+    window.draw(boundingRectangle);
+
     for (size_t i = 0; i < bullets.size(); i++)
     {
         window.draw(bullets[i]);

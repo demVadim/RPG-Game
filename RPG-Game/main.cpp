@@ -13,13 +13,12 @@ int main()
     settings.antialiasingLevel = 8;
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "RPG Game", sf::Style::Default, settings);
 
-
     Player player;
     Skeleton skeleton;
 
     player.Initialize();
     skeleton.Initialize();
-    
+    //-------------------------load---------------------------
     player.Load();
     skeleton.Load();
 
