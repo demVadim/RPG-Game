@@ -9,6 +9,8 @@ private:
 
 public:
 	sf::Sprite sprite;
+	sf::RectangleShape boundingRectangle;
+	sf::Vector2i size;
 public:
 	void Initialize();
 	void Load();

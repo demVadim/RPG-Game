@@ -8,8 +8,7 @@ void Player::Initialize()
     boundingRectangle.setOutlineColor(sf::Color::Red);
     boundingRectangle.setOutlineThickness(1);
     
-    size = sf::Vector2i(64, 64);
-    
+    size = sf::Vector2i(64, 64);  
 }
 
 void Player::Load()
@@ -52,7 +51,7 @@ void Player::Update(Skeleton& skeleton)
 
     for (size_t i = 0; i < bullets.size(); i++)
     {
-        sf::Vector2f bulletDirection = bulletDirection = skeleton.sprite.getPosition() - bullets[i].getPosition();
+        sf::Vector2f bulletDirection = skeleton.sprite.getPosition() - bullets[i].getPosition();
         bulletDirection = Math::NormalizeVector(bulletDirection);
         bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed);
     }
